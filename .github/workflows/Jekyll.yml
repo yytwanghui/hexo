@@ -3,9 +3,6 @@ name: Jekyll site CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
 jobs:
   build:
 
@@ -14,7 +11,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the site in the jekyll/builder container
+      env:
+        MY_VAR: Hi there! My name is
+        FIRST_NAME: Mona
+        MIDDLE_NAME: The
+        LAST_NAME: Octocat
       run: |
-        docker run \
-        -v ${{ github.workspace }}:/srv/jekyll -v ${{ github.workspace }}/_site:/srv/jekyll/_site \
-        jekyll/builder:latest /bin/bash -c "chmod 777 /srv/jekyll && jekyll build --future"
+        echo $MY_VAR $FIRST_NAME $MIDDLE_NAME $LAST_NAME.
